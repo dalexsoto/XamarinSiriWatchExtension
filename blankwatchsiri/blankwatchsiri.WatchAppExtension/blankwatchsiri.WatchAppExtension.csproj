@@ -113,12 +113,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\WatchOS\Xamarin.WatchOS.AppExtension.CSharp.targets" />
-  <!-- Manually copy the appex into the watch extension -->
-  <Target Name="BeforeCodesign">
-    <ItemGroup>
-      <WAppexFolder Include="..\WatchSiriExtension\bin\$(Platform)\$(Configuration)\WatchSiriExtension.appex\**\*.*" />
-    </ItemGroup>
-    <RemoveDir Condition="Exists('$(AppBundleDir)\PlugIns')" Directories="$(AppBundleDir)\PlugIns" />
-    <Copy SourceFiles="@(WAppexFolder)" DestinationFolder="$(AppBundleDir)\PlugIns\WatchSiriExtension.appex\%(RecursiveDir)" />
-  </Target>
 </Project>

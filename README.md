@@ -9,7 +9,7 @@ This is a template that you can use in your own solution, it contains the follow
 *  blankwatchsiri: This is the main iOS App that serves as the container of the watchOS App.
 *  blankwatchsiri.WatchApp: This is the main watchOS App that serves as the container of the watchOS App Extension.
 *  blankwatchsiri.WatchAppExtension: This is where you code your watchOS App and **it is also the container of the SiriKit watchOS Extension**
-*  **WatchSiriExtension**: This is the SiriKit watchOS extension project you want to include into your own Xamarin solution (as of today 2016/26/02 you need to do this manually).
+*  **WatchSiriExtension**: This is the SiriKit watchOS extension project you want to include into your own Xamarin solution (as of today 2017/15/03 you need to do this manually).
 
 So once you included **WatchSiriExtension** project into your solution, you will need to manually edit your **watchOS App Extension** project ([.csproj](blankwatchsiri/blankwatchsiri.WatchAppExtension/blankwatchsiri.WatchAppExtension.csproj) file) with your favorite editor and add the following:
 
@@ -25,21 +25,9 @@ Add this `ItemGroup` right **before** the `<Import>` tag, note you will need to 
 </ItemGroup>
 ```
 
-Now you need to add this `<Target>` right **after** the `<Import>` tag:
+You might want to tweak the code snippet a little in case you have a different path or you named **WatchSiriExtension** project something else.
 
-```xml
-<Target Name="BeforeCodesign">
-  <ItemGroup>
-    <WAppexFolder Include="..\WatchSiriExtension\bin\$(Platform)\$(Configuration)\WatchSiriExtension.appex\**\*.*" />
-  </ItemGroup>
-  <RemoveDir Condition="Exists('$(AppBundleDir)\PlugIns')" Directories="$(AppBundleDir)\PlugIns" />
-  <Copy SourceFiles="@(WAppexFolder)" DestinationFolder="$(AppBundleDir)\PlugIns\WatchSiriExtension.appex\%(RecursiveDir)" />
-</Target>
-```
-
-This will manually copy the SiriKit watchOS extension appex into the `PlugIns` folder inside your watchOS App Extension appex right before codesigning it. You might want to tweak both code snippets a little in case you have a different path or you named **WatchSiriExtension** project something else.
-
-If you followed the above steps you should be all set, happy coding.
+If you followed the above you should be all set, happy coding.
 
 ## intentsxamsample
 
